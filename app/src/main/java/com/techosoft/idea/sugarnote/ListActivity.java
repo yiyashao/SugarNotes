@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.avos.avoscloud.AVOSCloud;
 import com.techosoft.idea.sugarnote.model.AdapterRecrodList;
 import com.techosoft.idea.sugarnote.model.SugarRecord;
 
@@ -31,6 +32,13 @@ public class ListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //init helpers
+        //AVOSCloud.initialize(this, myHelper.mConst.CLOUD_KEY_01, myHelper.mConst.CLOUD_KEY_02); //initilize the cloud service
+        lvRecordList = (ListView) findViewById(R.id.lvRecordList);
+        recordList = new ArrayList<SugarRecord>();
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,11 +48,19 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
+        //initialize some records
+        SugarRecord item = new SugarRecord();
+        for(int i = 0; i < 40; i ++){
+            recordList.add(item);
+        }
+
+
         //start doing business
         loadDataFromCloud();
     }
 
     private void loadDataFromCloud() {
+
 
         whenResultReturned(recordList);
     }

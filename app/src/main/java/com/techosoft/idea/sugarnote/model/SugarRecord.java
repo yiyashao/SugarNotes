@@ -5,4 +5,6 @@ package com.techosoft.idea.sugarnote.model;
  * used to store the information for each sugar record
  */
 public class SugarRecord {
+
+    public SugarRecord(){}
 }
