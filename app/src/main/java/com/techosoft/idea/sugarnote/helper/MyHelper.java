@@ -58,6 +58,11 @@ public class MyHelper extends ContextWrapper {
         editor.commit();
     }
 
+    public void setSettingsBool(String key, boolean value){
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
     public String getSettingsStr(String key){
         return settings.getString(key, "");
     }
@@ -87,6 +92,7 @@ public class MyHelper extends ContextWrapper {
         String s = dateFormatter.format(currentDate);*/
         return currentDate;
     }
+
 
 }
 

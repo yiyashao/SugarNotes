@@ -21,9 +21,9 @@ public class AdapterRecrodList extends BaseAdapter {
     //necessary variables
     private Context myContext;
     private LayoutInflater myInflater;
-    private ArrayList<SugarRecord> dataSource;
+    private ArrayList<Reading> dataSource;
 
-    public AdapterRecrodList(Context context, ArrayList<SugarRecord> items) {
+    public AdapterRecrodList(Context context, ArrayList<Reading> items) {
 
         myContext = context;
         dataSource = items;
@@ -53,10 +53,10 @@ public class AdapterRecrodList extends BaseAdapter {
         // Get title element
         TextView record = (TextView) rowView.findViewById(R.id.tvRecord);
         // for each item, get the data into each cell
-        SugarRecord cellItem = (SugarRecord) getItem(position);
+        Reading cellItem = (Reading) getItem(position);
 
         //String expDate = DateFormat.getDateInstance().format(record.expireDate);
-        record.setText("this is a test");
+        record.setText(cellItem.reading + " | " + cellItem.note);
         //following used to add photo into cell, keep for future use
         //Picasso.with(mContext).load(recipe.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
 

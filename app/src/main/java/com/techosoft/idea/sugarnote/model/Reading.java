@@ -13,7 +13,7 @@ public class Reading {
     public int unit; //set in constants in "mmol/L" and "mg/dl"
     public String note;
     public Date timeStamp;
-    public int userId;
+    public String userId;
 
 
     public Reading(int reading, String note, Date currentTime){

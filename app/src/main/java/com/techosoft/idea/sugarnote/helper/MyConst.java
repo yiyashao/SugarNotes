@@ -22,6 +22,13 @@ public class MyConst {
     public final static String BLOOD_RECORD_TIME = "time";
     public final static String BLOOD_RECORD_UNIT= "unit";
     public final static String BLOOD_RECORD_USERID = "user_id";
+    public final static String TABLE_USER = "record_user";
+    public final static String USER_ID = "user_id";
+    public final static String USER_NAME = "username";
+    public final static String USER_PASSWORD = "password";
+
+
+
     public static final String LOG_TAG = "TechoSoft LOG";
 
 

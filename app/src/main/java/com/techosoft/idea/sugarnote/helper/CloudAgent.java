@@ -9,6 +9,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.SaveCallback;
 import com.techosoft.idea.sugarnote.model.Reading;
+import com.techosoft.idea.sugarnote.model.User;
 
 /**
  * Created by david on 2016/8/23.
@@ -52,6 +53,28 @@ public class CloudAgent extends ContextWrapper {
 
     }*/
 
+
+    public void addNewUser(User user){
+        final AVObject avoUser = new AVObject(mConst.TABLE_USER);
+        //avoUser.put(mConst.USER_ID, user.userId);
+        avoUser.put(mConst.USER_NAME, user.username);
+        avoUser.put(mConst.USER_PASSWORD, user.password);
+        avoUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                if (e == null) {
+                    // 存储成功
+                    Log.d(mConst.LOG_TAG, "new user saved with objId: " + avoUser.getObjectId());
+                    myHelper.setSettingsStr(mConst.KEY_USER_ID, avoUser.getObjectId()); //hardcoded
+
+                    // 保存成功之后，objectId 会自动从服务端加载到本地
+                } else {
+                    Log.d(mConst.LOG_TAG, "failed save want_item");
+                    // 失败的话，请检查网络环境以及 SDK 配置是否正确
+                }
+            }
+        });
+    }
 
 
     public void saveBloodReading(Reading reading){

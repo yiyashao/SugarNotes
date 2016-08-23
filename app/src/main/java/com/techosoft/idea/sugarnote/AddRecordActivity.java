@@ -91,7 +91,7 @@ public class AddRecordActivity extends AppCompatActivity {
     }
     private void processAndSaveData(Reading reading){
         CloudAgent cloudConn = new CloudAgent(this);
-        reading.userId = mHelper.getSettingsInt(MyConst .KEY_USER_ID);
+        reading.userId = mHelper.getSettingsStr(MyConst .KEY_USER_ID);
         cloudConn.saveBloodReading(reading);
         mHelper.displayToast("OK, saving data");
     }

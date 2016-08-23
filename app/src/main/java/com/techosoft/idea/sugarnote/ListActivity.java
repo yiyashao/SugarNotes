@@ -17,11 +17,14 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
+import com.techosoft.idea.sugarnote.helper.MyConst;
 import com.techosoft.idea.sugarnote.helper.MyHelper;
 import com.techosoft.idea.sugarnote.model.AdapterRecrodList;
+import com.techosoft.idea.sugarnote.model.Reading;
 import com.techosoft.idea.sugarnote.model.SugarRecord;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
@@ -33,6 +36,7 @@ public class ListActivity extends AppCompatActivity {
     // variables
     ArrayList<SugarRecord> recordList; // to store the want items
     MyHelper mHelper;
+    ArrayList<Reading> itemList; // to store the want items
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +45,11 @@ public class ListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //init helpers
+        //init helpers & variables
         mHelper = new MyHelper(this);
-        //AVOSCloud.initialize(this, myHelper.mConst.CLOUD_KEY_01, myHelper.mConst.CLOUD_KEY_02); //initilize the cloud service
+        AVOSCloud.initialize(this, MyConst.CLOUD_KEY_01, MyConst.CLOUD_KEY_02); //initilize the cloud service
         lvRecordList = (ListView) findViewById(R.id.lvRecordList);
-        recordList = new ArrayList<SugarRecord>();
+        itemList = new ArrayList<>();
 
 
 
@@ -53,23 +57,15 @@ public class ListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
                 goToActivity(AddRecordActivity.class);
+                finish();
             }
         });
 
-        //initialize some records
-        SugarRecord item = new SugarRecord();
-        for(int i = 0; i < 40; i ++){
-            recordList.add(item);
-        }
-
-
         //start doing business
         loadDataFromCloud();
-
-        mHelper.displayToast("load the list once");
     }
 
     private void loadDataFromCloud() {
@@ -79,7 +75,9 @@ public class ListActivity extends AppCompatActivity {
         progress.show();
 
         //load data from cloud
-        AVQuery<AVObject> query = new AVQuery<>("want_item");//query.whereEqualTo("user_id", 1); add this line to get records only for this user
+        AVQuery<AVObject> query = new AVQuery<>(MyConst.TABLE_BLOOD_RECORD);
+        mHelper.displayToast("userId is " + mHelper.getSettingsStr(MyConst .KEY_USER_ID));
+        query.whereEqualTo(MyConst.BLOOD_RECORD_USERID, mHelper.getSettingsStr(MyConst .KEY_USER_ID)); //add this line to get records only for this user
         query.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> resultList, AVException e) {
@@ -87,16 +85,19 @@ public class ListActivity extends AppCompatActivity {
                 if(resultList.size() > 0){
                     for(int i = 0; i < resultList.size(); i ++){
                         AVObject cloudItem = resultList.get(i);
-                        WantItem tempWantItem = new WantItem();
-                        tempWantItem.title = cloudItem.getString(myHelper.mConst.WANT_ITEM_TITLE);
-                        tempWantItem.detail = cloudItem.getString(myHelper.mConst.WANT_ITEM_DETAIL);
-                        tempWantItem.expireDate = cloudItem.getDate(myHelper.mConst.WANT_ITEM_DATE);
-                        tempWantItem.itemCloudId = cloudItem.getObjectId();
-                        itemList.add(tempWantItem);
+                        int readingValue = cloudItem.getInt(MyConst.BLOOD_RECORD_READING);
+                        String readingNote = cloudItem.getString(MyConst.BLOOD_RECORD_NOTE);
+                        String readingUserId = cloudItem.getString(MyConst.BLOOD_RECORD_USERID);
+                        Date readingDate = cloudItem.getDate(MyConst.BLOOD_RECORD_TIME);
+                        int readingUnit = cloudItem.getInt(MyConst.BLOOD_RECORD_UNIT);
+                        Reading bloodReading = new Reading(readingValue, readingNote, readingDate);
+                        bloodReading.unit = readingUnit;
+                        bloodReading.userId = readingUserId;
+                        itemList.add(bloodReading);
                     }
-                    Log.d(myHelper.mConst.LOG_TAG, "record found: " + resultList.size());
+                    Log.d(MyConst.LOG_TAG, "record found: " + resultList.size());
                 }else{
-                    Log.d(myHelper.mConst.LOG_TAG, "no record found for userId: " + 1); //current user have no record
+                    Log.d(MyConst.LOG_TAG, "no record found for userId: " + mHelper.getSettingsStr(MyConst .KEY_USER_ID)); //current user have no record
                 }
 
                 //mySleep(500); used to make sure the loading diagram shows
@@ -105,19 +106,17 @@ public class ListActivity extends AppCompatActivity {
                 progress.hide();
             }
         });
-
-        whenResultReturned(recordList);
     }
 
     // called when cloud data loaded, then build the cell list
-    public void whenResultReturned(final ArrayList<SugarRecord> itemList){
+    public void whenResultReturned(final ArrayList<Reading> itemList){
         AdapterRecrodList adapter = new AdapterRecrodList(this, itemList);
         lvRecordList.setAdapter(adapter);
         //use customized adapter to show the cell in a better way
         lvRecordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                SugarRecord selectedItem = itemList.get(position); //find selected item
+                Reading selectedItem = itemList.get(position); //find selected item
                 //goToDetailActivity(selectedItem);
                 //do nothing for now, since no need to click thru
             }
