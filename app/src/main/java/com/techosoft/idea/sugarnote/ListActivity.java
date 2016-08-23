@@ -1,6 +1,7 @@
 package com.techosoft.idea.sugarnote;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.techosoft.idea.sugarnote.helper.MyHelper;
 import com.techosoft.idea.sugarnote.model.AdapterRecrodList;
 import com.techosoft.idea.sugarnote.model.SugarRecord;
 
@@ -24,6 +26,7 @@ public class ListActivity extends AppCompatActivity {
 
     // variables
     ArrayList<SugarRecord> recordList; // to store the want items
+    MyHelper mHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class ListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //init helpers
+        mHelper = new MyHelper(this);
         //AVOSCloud.initialize(this, myHelper.mConst.CLOUD_KEY_01, myHelper.mConst.CLOUD_KEY_02); //initilize the cloud service
         lvRecordList = (ListView) findViewById(R.id.lvRecordList);
         recordList = new ArrayList<SugarRecord>();
@@ -45,6 +49,7 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                goToActivity(AddRecordActivity.class);
             }
         });
 
@@ -57,6 +62,8 @@ public class ListActivity extends AppCompatActivity {
 
         //start doing business
         loadDataFromCloud();
+
+        mHelper.displayToast("load the list once");
     }
 
     private void loadDataFromCloud() {
@@ -78,5 +85,12 @@ public class ListActivity extends AppCompatActivity {
                 //do nothing for now, since no need to click thru
             }
         });
+    }
+
+
+    //inner helpers
+    private void goToActivity(Class destinationClass) {
+        Intent intent = new Intent(this, destinationClass);
+        startActivity(intent);
     }
 }
