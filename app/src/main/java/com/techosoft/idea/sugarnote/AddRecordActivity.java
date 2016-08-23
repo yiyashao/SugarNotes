@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.techosoft.idea.sugarnote.helper.CloudAgent;
+import com.techosoft.idea.sugarnote.helper.MyConst;
 import com.techosoft.idea.sugarnote.helper.MyHelper;
 import com.techosoft.idea.sugarnote.model.Reading;
 
@@ -82,12 +84,15 @@ public class AddRecordActivity extends AppCompatActivity {
 
 
     private boolean isValidData(Reading mReading) {
-        return true;
+        return mReading.reading != 0;
     }
     private void askForReEntry() {
         mHelper.displayToast("Invalid data entry, please re-enter. Thanks.");
     }
     private void processAndSaveData(Reading reading){
+        CloudAgent cloudConn = new CloudAgent(this);
+        reading.userId = mHelper.getSettingsInt(MyConst .KEY_USER_ID);
+        cloudConn.saveBloodReading(reading);
         mHelper.displayToast("OK, saving data");
     }
 

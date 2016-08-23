@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.techosoft.idea.sugarnote.helper.MyHelper;
+
 public class LoginActivity extends AppCompatActivity {
 
 
@@ -15,10 +17,15 @@ public class LoginActivity extends AppCompatActivity {
     EditText etPassword;
     Button btnLogin;
 
+    private MyHelper mHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //init helpers
+        mHelper = new MyHelper(this);
 
         //initialize UI
         etUsername = (EditText)findViewById(R.id.etUsrName);
@@ -44,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 //TODO login / register user
 
                 //save this user as logged in
+                mHelper.setSettingsInt(mHelper.mConst.KEY_USER_ID, 1); //hardcoded
 
                 //goto record list activity
                 goToActivity(ListActivity.class);
