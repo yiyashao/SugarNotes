@@ -88,6 +88,8 @@ public class LoginActivity extends AppCompatActivity {
             goToActivity(ListActivity.class);
             mHelper.displayToast("user is already logged in");
             killActivity();
+        }else{
+            mHelper.displayToast("user not logged in" );
         }
     }
 
@@ -124,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
      * go to last step is user added correctly
      * @param user
      */
-    private void addNewUser(User user){
+    private void addNewUser(final User user){
         final AVObject avoUser = new AVObject(MyConst.TABLE_USER);
         //avoUser.put(mConst.USER_ID, user.userId);
         avoUser.put(MyConst.USER_NAME, user.username);
@@ -136,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(MyConst.LOG_TAG, "new user saved with objId: " + avoUser.getObjectId());
                     // save the new user's id as this app's user ID
                     mHelper.setSettingsStr(MyConst.KEY_USER_ID, avoUser.getObjectId());
+                    mHelper.setSettingsStr(MyConst.KEY_USER_NAME, user.username);
                     goNext(); //finish all business on this page, go on
                 } else {
                     Log.d(MyConst.LOG_TAG, "failed add new user");
@@ -163,6 +166,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (resultList.size() > 0) {
                     mHelper.logInfo("username password match for " + currentUser.username);
                     mHelper.setSettingsStr(MyConst.KEY_USER_ID, resultList.get(0).getObjectId());  //assume only one result returned
+                    mHelper.setSettingsStr(MyConst.KEY_USER_NAME, resultList.get(0).getString(MyConst.USER_NAME));
                     goNext();
                 }else{
                     mHelper.logInfo("username password DOESN'T match for " + currentUser.username);
@@ -189,9 +193,9 @@ public class LoginActivity extends AppCompatActivity {
     private void goNext(){
         mHelper.logInfo("going to record list, user logged in");
         progress.hide();
-        /*goToActivity(ListActivity.class);
-        mHelper.setLogin(true);
-        finish();*/
+        progress.dismiss();
+        goToActivity(ListActivity.class);
+        finish();
     }
 
     //inner helpers

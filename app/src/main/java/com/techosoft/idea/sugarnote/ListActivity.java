@@ -1,13 +1,16 @@
 package com.techosoft.idea.sugarnote;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,13 +20,11 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
-import com.avos.avoscloud.SaveCallback;
 import com.techosoft.idea.sugarnote.helper.MyConst;
 import com.techosoft.idea.sugarnote.helper.MyHelper;
 import com.techosoft.idea.sugarnote.model.AdapterRecrodList;
 import com.techosoft.idea.sugarnote.model.Reading;
 import com.techosoft.idea.sugarnote.model.SugarRecord;
-import com.techosoft.idea.sugarnote.model.User;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +54,9 @@ public class ListActivity extends AppCompatActivity {
         lvRecordList = (ListView) findViewById(R.id.lvRecordList);
         itemList = new ArrayList<>();
 
+        //setup toolbar title
+        String username = mHelper.getSettingsStr(MyConst.KEY_USER_NAME);
+        getSupportActionBar().setTitle(username + "'s Record");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -70,6 +74,67 @@ public class ListActivity extends AppCompatActivity {
         loadDataFromCloud();
     }
 
+    /***
+     * setup the option menus
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch(item.getItemId()){
+            case R.id.actBtnSettings:
+                mHelper.logInfo("settings button clicked");
+                return true;
+            case R.id.actBtnSignOut:
+                mHelper.logInfo(("sign out button clicked"));
+                confirmDialogSignout();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * confirmation dialog FOR signout
+     */
+    private void confirmDialogSignout(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to Sign Out?")
+                .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        mHelper.logInfo(("and user said yes to logout"));
+                        userSignout();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * signout user
+     */
+    private void userSignout() {
+        //empty username and user ID, signout user
+        mHelper.setSettingsStr(MyConst.KEY_USER_ID, "");
+        mHelper.setSettingsStr(MyConst.KEY_USER_NAME, "");
+        goToActivity(LoginActivity.class);
+        finish();
+    }
+
     private void loadDataFromCloud() {
         //handle the progress loading image
         progress=new ProgressDialog(this);
@@ -78,7 +143,6 @@ public class ListActivity extends AppCompatActivity {
 
         //load data from cloud
         AVQuery<AVObject> query = new AVQuery<>(MyConst.TABLE_BLOOD_RECORD);
-        mHelper.displayToast("userId is " + mHelper.getSettingsStr(MyConst .KEY_USER_ID));
         query.whereEqualTo(MyConst.BLOOD_RECORD_USERID, mHelper.getSettingsStr(MyConst .KEY_USER_ID)); //add this line to get records only for this user
         query.findInBackground(new FindCallback<AVObject>() {
             @Override
@@ -106,6 +170,7 @@ public class ListActivity extends AppCompatActivity {
                 whenResultReturned(itemList);
 
                 progress.hide();
+                progress.dismiss();
             }
         });
     }
@@ -119,8 +184,7 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Reading selectedItem = itemList.get(position); //find selected item
-                //goToDetailActivity(selectedItem);
-                //do nothing for now, since no need to click thru
+                //TODO actions
             }
         });
     }

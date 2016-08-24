@@ -9,9 +9,13 @@ import android.widget.TextView;
 
 import com.techosoft.idea.sugarnote.ListActivity;
 import com.techosoft.idea.sugarnote.R;
+import com.techosoft.idea.sugarnote.helper.MyConst;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by davidsss on 16-08-22.
@@ -56,10 +60,19 @@ public class AdapterRecrodList extends BaseAdapter {
         Reading cellItem = (Reading) getItem(position);
 
         //String expDate = DateFormat.getDateInstance().format(record.expireDate);
-        record.setText(cellItem.reading + " | " + cellItem.note);
+        String recordTime = getDayTimeStr(cellItem.timeStamp);
+        record.setText( recordTime + " | " +cellItem.reading + " | " + cellItem.note);
         //following used to add photo into cell, keep for future use
         //Picasso.with(mContext).load(recipe.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
-
         return rowView;
     }
+
+    private String getDayTimeStr(Date date){
+        Calendar calander;
+        calander = Calendar.getInstance();
+        SimpleDateFormat simpledateformat;
+        simpledateformat = new SimpleDateFormat(MyConst.DAY_TIME_FORMAT);
+        return simpledateformat.format(calander.getTime());
+    }
+
 }

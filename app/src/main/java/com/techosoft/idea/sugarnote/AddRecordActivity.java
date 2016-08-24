@@ -79,9 +79,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
-
 
     private boolean isValidData(Reading mReading) {
         return mReading.reading != 0;
@@ -93,9 +91,8 @@ public class AddRecordActivity extends AppCompatActivity {
         CloudAgent cloudConn = new CloudAgent(this);
         reading.userId = mHelper.getSettingsStr(MyConst .KEY_USER_ID);
         cloudConn.saveBloodReading(reading);
-        mHelper.displayToast("OK, saving data");
+        mHelper.displayToast("Adding new record to server");
     }
-
 
     //inner helpers
     private void goToActivity(Class destinationClass) {

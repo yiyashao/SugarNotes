@@ -7,6 +7,7 @@ public class MyConst {
     public static final String PERF_SETTING = "settings";
     public static final String KEY_USER_ID = "user_id";
     public static final String KEY_LOGIN = "key_login" ;
+    public static final String KEY_USER_NAME = "user_name";
     public static final int UNIT_MMOL_L = 0;
     public static final int UNIT_MG_DL = 1;
     public static final String STR_UNIT_MMOL_L = "mmol/L";
@@ -32,6 +33,7 @@ public class MyConst {
     public static final String LOG_TAG = "TechoSoft LOG";
     public static final String HINT_PASSWORD = "password" ;
     public static final String HINT_USERNAME = "username";
+    public static final java.lang.String DAY_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
 
     public MyConst(){}

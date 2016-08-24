@@ -78,7 +78,11 @@ public class MyHelper extends ContextWrapper {
     }
 
     public boolean isLogin(){
-        return settings.getBoolean(mConst.KEY_LOGIN, false);
+        if(getSettingsStr(MyConst.KEY_USER_NAME) != ""){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public String getCurrentTime() {
@@ -91,16 +95,17 @@ public class MyHelper extends ContextWrapper {
         return date;
     }
 
+    public String getDayTimeStr(Date date){
+        Calendar calander;
+        calander = Calendar.getInstance();
+        SimpleDateFormat simpledateformat;
+        simpledateformat = new SimpleDateFormat(MyConst.DAY_TIME_FORMAT);
+        return simpledateformat.format(calander.getTime());
+    }
     public Date getCurrentDate(){
         Date currentDate = new Date();
-/*        String currentDateTimeString = DateFormat.getDateInstance().format(currentDate);
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hhmmss");
-        dateFormatter.setLenient(false);
-        String s = dateFormatter.format(currentDate);*/
         return currentDate;
     }
-
-
 }
 
 
