@@ -86,10 +86,10 @@ public class LoginActivity extends AppCompatActivity {
         if(mHelper.isLogin()){
             //go to list activity
             goToActivity(ListActivity.class);
-            mHelper.displayToast("user is already logged in");
+           // mHelper.displayToast("user is already logged in");
             killActivity();
         }else{
-            mHelper.displayToast("user not logged in" );
+            //mHelper.displayToast("user not logged in" );
         }
     }
 

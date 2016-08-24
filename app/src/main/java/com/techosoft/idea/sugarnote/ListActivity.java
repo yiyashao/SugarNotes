@@ -187,6 +187,7 @@ public class ListActivity extends AppCompatActivity {
                 //TODO actions
             }
         });
+        //lvRecordList.setOnLongClickListener();
     }
 
 
