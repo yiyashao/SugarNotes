@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class Reading {
     //public properties
+    public String objectId;
     public int reading;
     public int unit; //set in constants in "mmol/L" and "mg/dl"
     public String note;

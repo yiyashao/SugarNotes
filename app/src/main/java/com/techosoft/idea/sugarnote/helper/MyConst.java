@@ -19,6 +19,7 @@ public class MyConst {
     public final static String CLOUD_KEY_02 = "xfPUMQa6tJH2nfi8nDJoJJeS";
     public final static String TABLE_BLOOD_RECORD = "blood_record";
     public final static String BLOOD_RECORD_READING = "reading";
+    public final static String BLOOD_RECORD_ID = "objectId";
     public final static String BLOOD_RECORD_NOTE = "note";
     public final static String BLOOD_RECORD_TIME = "time";
     public final static String BLOOD_RECORD_UNIT= "unit";

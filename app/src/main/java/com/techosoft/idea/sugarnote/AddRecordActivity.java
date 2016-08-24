@@ -20,6 +20,7 @@ public class AddRecordActivity extends AppCompatActivity {
 
     //UI components
     Button btnAdd;
+    Button btnCancel;
     EditText etReading;
     EditText etNote;
     TextView tvReadingTime;
@@ -45,6 +46,7 @@ public class AddRecordActivity extends AppCompatActivity {
         etReading = (EditText)findViewById(R.id.etReadingNum);
         etNote = (EditText)findViewById(R.id.etReadingNote);
         btnAdd = (Button)findViewById(R.id.btnAddRecord);
+        btnCancel = (Button)findViewById(R.id.btnCancelRecord);
 
         //add listeners
         etReading.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +79,13 @@ public class AddRecordActivity extends AppCompatActivity {
                 }else{
                     askForReEntry();
                 }
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToActivity(ListActivity.class);
+                finish();
             }
         });
     }

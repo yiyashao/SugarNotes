@@ -40,6 +40,7 @@ public class ListActivity extends AppCompatActivity {
     ArrayList<SugarRecord> recordList; // to store the want items
     MyHelper mHelper;
     ArrayList<Reading> itemList; // to store the want items
+    AdapterRecrodList adapter; //adapter for the list
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class ListActivity extends AppCompatActivity {
         AVOSCloud.initialize(this, MyConst.CLOUD_KEY_01, MyConst.CLOUD_KEY_02); //initilize the cloud service
         lvRecordList = (ListView) findViewById(R.id.lvRecordList);
         itemList = new ArrayList<>();
+        adapter = new AdapterRecrodList(this, itemList);
 
         //setup toolbar title
         String username = mHelper.getSettingsStr(MyConst.KEY_USER_NAME);
@@ -125,6 +127,29 @@ public class ListActivity extends AppCompatActivity {
     }
 
     /**
+     * confirmation dialog FOR delete
+     */
+    private void confirmDialogDelete(final int pos){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to delete this item?")
+                .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        mHelper.logInfo(("delete item at position " + pos));
+                        removeReading(pos);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
+
+
+    /**
      * signout user
      */
     private void userSignout() {
@@ -157,6 +182,7 @@ public class ListActivity extends AppCompatActivity {
                         Date readingDate = cloudItem.getDate(MyConst.BLOOD_RECORD_TIME);
                         int readingUnit = cloudItem.getInt(MyConst.BLOOD_RECORD_UNIT);
                         Reading bloodReading = new Reading(readingValue, readingNote, readingDate);
+                        bloodReading.objectId = cloudItem.getObjectId();
                         bloodReading.unit = readingUnit;
                         bloodReading.userId = readingUserId;
                         itemList.add(bloodReading);
@@ -165,10 +191,7 @@ public class ListActivity extends AppCompatActivity {
                 }else{
                     Log.d(MyConst.LOG_TAG, "no record found for userId: " + mHelper.getSettingsStr(MyConst .KEY_USER_ID)); //current user have no record
                 }
-
-                //mySleep(500); used to make sure the loading diagram shows
                 whenResultReturned(itemList);
-
                 progress.hide();
                 progress.dismiss();
             }
@@ -177,7 +200,8 @@ public class ListActivity extends AppCompatActivity {
 
     // called when cloud data loaded, then build the cell list
     public void whenResultReturned(final ArrayList<Reading> itemList){
-        AdapterRecrodList adapter = new AdapterRecrodList(this, itemList);
+        adapter.setDataSource(itemList);
+        //final AdapterRecrodList adapter = new AdapterRecrodList(this, itemList);
         lvRecordList.setAdapter(adapter);
         //use customized adapter to show the cell in a better way
         lvRecordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -187,9 +211,27 @@ public class ListActivity extends AppCompatActivity {
                 //TODO actions
             }
         });
-        //lvRecordList.setOnLongClickListener();
+        lvRecordList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+                //pop dialog, if yes, go remove, otherwise, do nothing
+                confirmDialogDelete(pos);
+                return true;
+            }
+        });
     }
 
+    private void removeReading(int pos) {
+        removeReadingFromCloud(pos);
+        itemList.remove(pos);//where arg2 is position of item you click
+        adapter.notifyDataSetChanged();
+    }
+
+    private void removeReadingFromCloud(int pos) {
+        Reading toRemove = itemList.get(pos);
+        AVObject cloudItem = AVObject.createWithoutData(MyConst.TABLE_BLOOD_RECORD, toRemove.objectId);
+        cloudItem.deleteInBackground();
+    }
 
 
     //inner helpers

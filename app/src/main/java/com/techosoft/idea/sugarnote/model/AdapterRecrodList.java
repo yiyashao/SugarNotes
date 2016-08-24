@@ -11,6 +11,7 @@ import com.techosoft.idea.sugarnote.ListActivity;
 import com.techosoft.idea.sugarnote.R;
 import com.techosoft.idea.sugarnote.helper.MyConst;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +33,10 @@ public class AdapterRecrodList extends BaseAdapter {
         myContext = context;
         dataSource = items;
         myInflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void setDataSource(ArrayList<Reading> data){
+        dataSource = data;
     }
 
     @Override
