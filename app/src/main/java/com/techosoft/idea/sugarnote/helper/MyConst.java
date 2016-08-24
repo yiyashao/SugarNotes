@@ -30,6 +30,8 @@ public class MyConst {
 
 
     public static final String LOG_TAG = "TechoSoft LOG";
+    public static final String HINT_PASSWORD = "password" ;
+    public static final String HINT_USERNAME = "username";
 
 
     public MyConst(){}

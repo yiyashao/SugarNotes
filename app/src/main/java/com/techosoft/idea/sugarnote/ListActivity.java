@@ -17,11 +17,13 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.SaveCallback;
 import com.techosoft.idea.sugarnote.helper.MyConst;
 import com.techosoft.idea.sugarnote.helper.MyHelper;
 import com.techosoft.idea.sugarnote.model.AdapterRecrodList;
 import com.techosoft.idea.sugarnote.model.Reading;
 import com.techosoft.idea.sugarnote.model.SugarRecord;
+import com.techosoft.idea.sugarnote.model.User;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -122,6 +124,7 @@ public class ListActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
     //inner helpers

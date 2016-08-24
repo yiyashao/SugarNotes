@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -28,6 +29,12 @@ public class MyHelper extends ContextWrapper {
         settings = context.getSharedPreferences(mConst.PERF_SETTING, 0);
         editor = settings.edit();
     }
+
+
+    public void logInfo(String message){
+        Log.d(MyConst.LOG_TAG, message);
+    }
+
 
     public void displayToast(String text){
         Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
