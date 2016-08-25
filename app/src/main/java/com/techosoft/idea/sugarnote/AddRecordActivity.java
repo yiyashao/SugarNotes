@@ -90,11 +90,20 @@ public class AddRecordActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * checking if the data record is valid
+     * @param mReading
+     * @return
+     */
     private boolean isValidData(Reading mReading) {
+
+
+
+
         return mReading.reading != 0;
     }
     private void askForReEntry() {
-        mHelper.displayToast("Invalid data entry, please re-enter. Thanks.");
+        mHelper.displayToast("Invalid data entry, please re-enter.");
     }
     private void processAndSaveData(Reading reading){
         CloudAgent cloudConn = new CloudAgent(this);

@@ -19,4 +19,14 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="0dp" />
+    <TextView
+        android:id="@+id/empty_list_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:text="@string/emptyList"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:padding="5dp">
+    </TextView>
 </RelativeLayout>

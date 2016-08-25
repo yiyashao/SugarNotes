@@ -29,6 +29,8 @@ public class MyConst {
     public final static String USER_NAME = "username";
     public final static String USER_PASSWORD = "password";
 
+    public final static int LOG_LEVEL = 0;
+    public final static int LOG_LEVEL_NO_LOG = 0;
 
 
     public static final String LOG_TAG = "TechoSoft LOG";

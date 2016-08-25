@@ -53,6 +53,7 @@ public class ListActivity extends AppCompatActivity {
         mHelper = new MyHelper(this);
         AVOSCloud.initialize(this, MyConst.CLOUD_KEY_01, MyConst.CLOUD_KEY_02); //initilize the cloud service
         lvRecordList = (ListView) findViewById(R.id.lvRecordList);
+        lvRecordList.setEmptyView(findViewById(R.id.empty_list_item));
         itemList = new ArrayList<>();
         adapter = new AdapterRecrodList(this, itemList);
 
@@ -153,9 +154,7 @@ public class ListActivity extends AppCompatActivity {
      * signout user
      */
     private void userSignout() {
-        //empty username and user ID, signout user
-        mHelper.setSettingsStr(MyConst.KEY_USER_ID, "");
-        mHelper.setSettingsStr(MyConst.KEY_USER_NAME, "");
+        mHelper.processSignout();
         goToActivity(LoginActivity.class);
         finish();
     }

@@ -7,6 +7,8 @@ import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.techosoft.idea.sugarnote.model.User;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,7 +34,9 @@ public class MyHelper extends ContextWrapper {
 
 
     public void logInfo(String message){
-        Log.d(MyConst.LOG_TAG, message);
+        if(MyConst.LOG_LEVEL >  MyConst.LOG_LEVEL_NO_LOG){
+            Log.d(MyConst.LOG_TAG, message);
+        }
     }
 
 
@@ -77,8 +81,13 @@ public class MyHelper extends ContextWrapper {
         return settings.getInt(key, 0);
     }
 
+
+    /**
+     * the token used to determine isLogin is are username and userid empty as ""
+     * @return
+     */
     public boolean isLogin(){
-        if(getSettingsStr(MyConst.KEY_USER_NAME) != ""){
+        if(getSettingsStr(MyConst.KEY_USER_NAME) != "" && getSettingsStr(MyConst.KEY_USER_ID) != ""){
             return true;
         }else{
             return false;
@@ -105,6 +114,26 @@ public class MyHelper extends ContextWrapper {
     public Date getCurrentDate(){
         Date currentDate = new Date();
         return currentDate;
+    }
+
+    /**
+     * take current user and save the user's objId + username in cache, these 2 info are the token for login
+     * @param currentUser
+     */
+    public void processLoginFor(User currentUser) {
+        logInfo("username password match for " + currentUser.username);
+        setSettingsStr(MyConst.KEY_USER_ID, currentUser.objId);  //assume only one result returned
+        setSettingsStr(MyConst.KEY_USER_NAME, currentUser.username);
+    }
+
+
+    /**
+     *
+     */
+    public void processSignout() {
+        //empty username and user ID, signout user
+        setSettingsStr(MyConst.KEY_USER_ID, "");
+        setSettingsStr(MyConst.KEY_USER_NAME, "");
     }
 }
 

@@ -93,9 +93,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-
-
     /**
      * STEP 1, check if this is a new user OR old user, register the new user and login the old user
      * @param currentUser
@@ -135,10 +132,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void done(AVException e) {
                 if (e == null) {
-                    Log.d(MyConst.LOG_TAG, "new user saved with objId: " + avoUser.getObjectId());
+                    mHelper.logInfo( "new user saved with objId: " + avoUser.getObjectId());
                     // save the new user's id as this app's user ID
-                    mHelper.setSettingsStr(MyConst.KEY_USER_ID, avoUser.getObjectId());
-                    mHelper.setSettingsStr(MyConst.KEY_USER_NAME, user.username);
+                    user.objId = avoUser.getObjectId();
+                    mHelper.processLoginFor(user); //save USER_ID and USER_NAME to cache
                     goNext(); //finish all business on this page, go on
                 } else {
                     Log.d(MyConst.LOG_TAG, "failed add new user");
@@ -153,9 +150,9 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void loginUser(final User currentUser) {
         //setup the query
-        final AVQuery<AVObject> usernameQuery = new AVQuery<>(MyConst.TABLE_USER);
+        AVQuery<AVObject> usernameQuery = new AVQuery<>(MyConst.TABLE_USER);
         usernameQuery.whereEqualTo(MyConst.USER_NAME, currentUser.username);
-        final AVQuery<AVObject> passwordQuery = new AVQuery<>(MyConst.TABLE_USER);
+        AVQuery<AVObject> passwordQuery = new AVQuery<>(MyConst.TABLE_USER);
         passwordQuery.whereEqualTo(MyConst.USER_PASSWORD, currentUser.password);
         AVQuery<AVObject> query = AVQuery.and(Arrays.asList(usernameQuery, passwordQuery)); //AND 2 queries
         //run the query
@@ -164,9 +161,8 @@ public class LoginActivity extends AppCompatActivity {
             public void done(List<AVObject> resultList, AVException e) {
                 //loop through the result if returned value
                 if (resultList.size() > 0) {
-                    mHelper.logInfo("username password match for " + currentUser.username);
-                    mHelper.setSettingsStr(MyConst.KEY_USER_ID, resultList.get(0).getObjectId());  //assume only one result returned
-                    mHelper.setSettingsStr(MyConst.KEY_USER_NAME, resultList.get(0).getString(MyConst.USER_NAME));
+                    currentUser.objId = resultList.get(0).getObjectId();
+                    mHelper.processLoginFor(currentUser);
                     goNext();
                 }else{
                     mHelper.logInfo("username password DOESN'T match for " + currentUser.username);

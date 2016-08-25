@@ -7,26 +7,28 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.techosoft.idea.sugarnote.LoginActivity">
+    tools:context="com.techosoft.idea.sugarnote.LoginActivity"
+    android:background="#f1f6f6">
 
-    <TextView
-        android:layout_width="fill_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login / Register"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:id="@+id/textView" />
+        android:id="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:longClickable="true"
+        android:maxHeight="60dp"
+        android:maxWidth="60dp"
+        android:src="@mipmap/logo"
+        android:layout_margin="20dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/etUsrName"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
         android:width="200dp"
-        android:hint="username" />
+        android:hint="@string/login_username"
+        android:layout_below="@+id/imageView"
+        android:layout_alignStart="@+id/etPassword" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -38,15 +40,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:width="200dp"
-        android:hint="password" />
+        android:hint="@string/login_password" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login/Register"
+        android:text="@string/btn_login_register"
         android:id="@+id/btnLoginRegister"
         android:layout_below="@+id/etPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:width="150dp" />
+        android:width="200dp" />
+
 </RelativeLayout>
