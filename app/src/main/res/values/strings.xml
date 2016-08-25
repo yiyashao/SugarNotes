@@ -2,7 +2,7 @@
     <string name="app_name">SugarNote</string>
     <string name="title_activity_list">ListActivity</string>
     <string name="emptyList">No Record Found</string>
-    <string name="login_password">password</string>
-    <string name="login_username">username</string>
+    <string name="login_password">Password</string>
+    <string name="login_username">Username</string>
     <string name="btn_login_register">LOGIN/REGISTER</string>
 </resources>
