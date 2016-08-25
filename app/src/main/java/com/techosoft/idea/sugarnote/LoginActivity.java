@@ -1,14 +1,17 @@
 package com.techosoft.idea.sugarnote;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVOSCloud;
@@ -54,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         //handle the progress loading image
         progress=new ProgressDialog(this);
         progress.setMessage("loading data");
+        getSupportActionBar().setTitle("Sugar NOTE");
 
         //testing purpose, set login = false
         mHelper.setSettingsBool(MyConst.KEY_LOGIN, false);
