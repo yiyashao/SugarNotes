@@ -36,7 +36,7 @@ public class MyConst {
     public static final String LOG_TAG = "TechoSoft LOG";
     public static final String HINT_PASSWORD = "password" ;
     public static final String HINT_USERNAME = "username";
-    public static final java.lang.String DAY_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    public static final java.lang.String DAY_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 
     public MyConst(){}

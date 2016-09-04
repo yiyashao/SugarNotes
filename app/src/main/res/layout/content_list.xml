@@ -18,7 +18,7 @@
         android:id="@+id/lvRecordList"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="0dp" />
+        android:layout_marginTop="20dp" />
     <TextView
         android:id="@+id/empty_list_item"
         android:layout_width="match_parent"

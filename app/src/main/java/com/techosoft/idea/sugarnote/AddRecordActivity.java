@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +48,14 @@ public class AddRecordActivity extends AppCompatActivity {
         etNote = (EditText)findViewById(R.id.etReadingNote);
         btnAdd = (Button)findViewById(R.id.btnAddRecord);
         btnCancel = (Button)findViewById(R.id.btnCancelRecord);
+
+        //setup the tool bar
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.my_actionbar);
+        View customView = getSupportActionBar().getCustomView();
+        Toolbar parent =(Toolbar) customView.getParent();
+        parent.setContentInsetsAbsolute(0,0);
 
         //add listeners
         etReading.setOnClickListener(new View.OnClickListener() {

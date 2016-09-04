@@ -9,100 +9,69 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.techosoft.idea.sugarnote.AddRecordActivity">
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/layoutTop">
 
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/btnCancelRecord"
+        android:width="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/ic_add_cancel" />
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/btnAddRecord"
+        android:width="100dp"
+        android:background="@drawable/ic_add_confirm"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/layoutTop"
+        >
 
-        <TextView
-            android:layout_width="fill_parent"
+
+        <EditText
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Record Your Reading"
-            android:id="@+id/tvReadingIntro"
-            android:textAlignment="center" />
+            android:id="@+id/etReadingNum"
+            android:width="150dp"
+            android:hint="Your Reading"
+            android:inputType="number"
+            android:clickable="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/etReadingNote"
+            android:lines="1"
+            android:hint="Remark"
+            android:layout_gravity="center_horizontal"
+            android:longClickable="false" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="2016 Feb 10, 10:23AM"
             android:id="@+id/tvReadingTime"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal">
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/etReadingNum"
-                android:width="150dp"
-                android:hint="Your Reading"
-                android:inputType="number"
-                android:clickable="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="mg/dl"
-                android:id="@+id/tvReadingUnit"
-                android:width="30dp"
-                android:textSize="8dp"
-                android:paddingLeft="5dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Note:"
-                android:id="@+id/textView3"
-                android:textSize="12dp" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/etReadingNote"
-                android:width="170dp"
-                android:lines="2"
-                android:hint="Remark" />
-        </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            android:id="@+id/btnAddRecord"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            android:width="100dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/btnCancelRecord"
-            android:layout_gravity="center_horizontal"
-            android:width="100dp" />
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:layout_marginLeft="5dp" />
 
     </LinearLayout>
 </RelativeLayout>

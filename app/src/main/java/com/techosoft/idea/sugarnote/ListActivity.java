@@ -54,6 +54,7 @@ public class ListActivity extends AppCompatActivity {
         AVOSCloud.initialize(this, MyConst.CLOUD_KEY_01, MyConst.CLOUD_KEY_02); //initilize the cloud service
         lvRecordList = (ListView) findViewById(R.id.lvRecordList);
         lvRecordList.setEmptyView(findViewById(R.id.empty_list_item));
+        lvRecordList.setDivider(null);
         itemList = new ArrayList<>();
         adapter = new AdapterRecrodList(this, itemList);
 
@@ -168,6 +169,7 @@ public class ListActivity extends AppCompatActivity {
         //load data from cloud
         AVQuery<AVObject> query = new AVQuery<>(MyConst.TABLE_BLOOD_RECORD);
         query.whereEqualTo(MyConst.BLOOD_RECORD_USERID, mHelper.getSettingsStr(MyConst .KEY_USER_ID)); //add this line to get records only for this user
+        query.orderByDescending(MyConst.BLOOD_RECORD_TIME);
         query.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> resultList, AVException e) {

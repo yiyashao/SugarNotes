@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="15dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvRecord"
-        android:text="record"
-        android:padding="10dp"
-        android:height="40dp"
-        android:textSize="16dp" />
-</LinearLayout>
+        android:orientation="horizontal"
+        android:weightSum="20"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/tvRecordNum"
+            android:layout_weight="4"
+            android:background="@drawable/edit_text_style"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:text="999"
+            android:textColor="#1ec32c"
+            android:textStyle="bold"
+            android:textSize="28dp"
+            android:textIsSelectable="false" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="25dp"
+                android:id="@+id/tvRecordTime"
+                android:background="@drawable/edit_text_style"
+                android:gravity="center_vertical|left"
+                android:paddingLeft="5dp"
+                android:text="2016-12-12 12:22" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="25dp"
+                android:id="@+id/tvRecordNote"
+                android:background="@drawable/edit_text_style"
+                android:gravity="center_vertical|left"
+                android:paddingLeft="5dp"
+                android:text="note for nothing" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

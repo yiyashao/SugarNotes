@@ -60,15 +60,15 @@ public class AdapterRecrodList extends BaseAdapter {
         // Get view for row item
         View rowView = myInflater.inflate(R.layout.cell_record, parent, false);
         // Get title element
-        TextView record = (TextView) rowView.findViewById(R.id.tvRecord);
+        TextView record = (TextView) rowView.findViewById(R.id.tvRecordTime);
+        TextView count = (TextView) rowView.findViewById(R.id.tvRecordNum);
+        TextView note = (TextView) rowView.findViewById(R.id.tvRecordNote);
         // for each item, get the data into each cell
         Reading cellItem = (Reading) getItem(position);
-
-        //String expDate = DateFormat.getDateInstance().format(record.expireDate);
-        String recordTime = getDayTimeStr(cellItem.timeStamp);
-        record.setText( recordTime + " | " +cellItem.reading + " | " + cellItem.note);
-        //following used to add photo into cell, keep for future use
-        //Picasso.with(mContext).load(recipe.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
+        String recordTime = getDayTimeStr(cellItem.timeStamp); //format the time
+        count.setText(String.valueOf(cellItem.reading));
+        note.setText(cellItem.note);
+        record.setText( recordTime);
         return rowView;
     }
 
@@ -77,7 +77,7 @@ public class AdapterRecrodList extends BaseAdapter {
         calander = Calendar.getInstance();
         SimpleDateFormat simpledateformat;
         simpledateformat = new SimpleDateFormat(MyConst.DAY_TIME_FORMAT);
-        return simpledateformat.format(calander.getTime());
+        return simpledateformat.format(date);
     }
 
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,14 @@ public class LoginActivity extends AppCompatActivity {
         //handle the progress loading image
         progress=new ProgressDialog(this);
         progress.setMessage("loading data");
-        getSupportActionBar().setTitle("Sugar NOTE");
+
+        //setup the tool bar
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.my_actionbar);
+        View customView = getSupportActionBar().getCustomView();
+        Toolbar parent =(Toolbar) customView.getParent();
+        parent.setContentInsetsAbsolute(0,0);
 
         //testing purpose, set login = false
         mHelper.setSettingsBool(MyConst.KEY_LOGIN, false);
@@ -81,8 +89,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //read this user informatioin
                 User currentUsr = new User(etUsername.getText().toString(), etPassword.getText().toString());
-                //check user, start the process
-               checkNewUser(currentUsr);
+                //check if empty input OR wrong format
+                if(isValidEntries()){
+                    //check user, start the process
+                    checkNewUser(currentUsr);
+                }
             }
         });
 
@@ -95,6 +106,20 @@ public class LoginActivity extends AppCompatActivity {
         }else{
             //mHelper.displayToast("user not logged in" );
         }
+    }
+
+
+    //helper for check the user name rules
+    private boolean isValidEntries() {
+        boolean valid = true;
+        if(etUsername.getText().toString().matches("") ||
+                etPassword.getText().toString().matches("")){
+            mHelper.displayToast("sorry, username / password can not be empty");
+            etPassword.setHint(MyConst.HINT_PASSWORD);
+            etUsername.setHint(MyConst.HINT_USERNAME);
+            valid = false;
+        }
+        return valid;
     }
 
     /**
