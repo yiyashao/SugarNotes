@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:contentInsetStart="0dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:gravity="right">
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textAllCaps="false"
+        android:textColor="#ddecf6"
+        android:textStyle="bold"
+        android:text="SugarNote"
+        android:layout_marginRight="10dp"
+        android:textSize="22dp" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.Toolbar>
