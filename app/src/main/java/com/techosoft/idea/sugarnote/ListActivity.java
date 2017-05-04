@@ -95,9 +95,9 @@ public class ListActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch(item.getItemId()){
-            case R.id.actBtnSettings:
+            /*case R.id.actBtnSettings:      //no settings button for now. things are just fixed and no change allowed
                 mHelper.logInfo("settings button clicked");
-                return true;
+                return true;*/
             case R.id.actBtnSignOut:
                 mHelper.logInfo(("sign out button clicked"));
                 confirmDialogSignout();

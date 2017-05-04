@@ -6,9 +6,9 @@
         android:orderInCategory="100"
         android:title="Sign Out"
         app:showAsAction="never" />
-    <item
+    <!--item
         android:id="@+id/actBtnSettings"
         android:orderInCategory="90"
         android:title="Settings"
-        app:showAsAction="never" />
+        app:showAsAction="never" /-->
 </menu>
